@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 from dotenv import load_dotenv
+from flask_cors import CORS
+
 import os
 import MySQLdb.cursors
 
@@ -13,6 +15,8 @@ db_port = int(os.getenv('DB_PORT'))
 db_name = os.getenv('DB_NAME')
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:4200"])
+
 
 # Required
 app.config['MYSQL_HOST'] = db_host
