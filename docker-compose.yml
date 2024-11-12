@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  db:
+    #build: ./db
+    #container_name: mysql_crud_container
+    image: prospect9921/crud_python_angular:mysql_crud_container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: project_crud
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - crudnetwork
+    volumes:
+      - db_data:/var/lib/mysql
+      #- ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    #build: ./backend
+    #container_name: backend_crud_container
+    image: prospect9921/crud_python_angular:backend_crud_container
+    environment:
+      FLASK_ENV: development
+      DB_HOST: db
+      DB_NAME: project_crud
+      DB_USER: user
+      DB_PASSWORD: password
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    networks:
+      - crudnetwork
+
+  frontend:
+    #build: ./front
+    #container_name: frontend_crud_container
+    image: prospect9921/crud_python_angular:frontend_crud_container
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - crudnetwork
+
+networks:
+  crudnetwork:
+    driver: bridge
+
+volumes:
+  db_data:

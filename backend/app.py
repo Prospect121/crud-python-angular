@@ -11,35 +11,20 @@ load_dotenv()
 db_user = os.getenv('DB_USER')
 db_password = os.getenv('DB_PASSWORD')
 db_host = os.getenv('DB_HOST')
-db_port = int(os.getenv('DB_PORT'))
 db_name = os.getenv('DB_NAME')
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:4200"])
+
+CORS(app) 
 
 
 # Required
 app.config['MYSQL_HOST'] = db_host
-app.config["MYSQL_PORT"] = db_port
 app.config["MYSQL_USER"] = db_user
 app.config["MYSQL_PASSWORD"] = db_password
 app.config["MYSQL_DB"] = db_name
 
 mysql = MySQL(app)
-
-# Create the database table if it does not exist
-@app.before_request
-def create_tables():
-    cursor = mysql.connection.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS tasks (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            task VARCHAR(255),
-            status BOOLEAN
-        )
-    """)
-    mysql.connection.commit()
-    cursor.close()
 
 # Ruta para obtener usuarios
 @app.route('/users', methods=['GET'])
@@ -111,4 +96,4 @@ def remove_user(id):
 
 
 if __name__ == '__main__':
- app.run(debug=True)
+ app.run(host='0.0.0.0', port=5000)
