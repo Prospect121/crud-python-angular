@@ -1,4 +1,40 @@
-<h2>User List</h2>
-<ul>
-  <li *ngFor="let user of users | async">{{ user.name }} - {{ user.email }}</li>
-</ul>
+<section class="py-[2rem]">
+  <div class="lg:mx-auto mx-[1.5rem] max-w-5xl">
+    <h1 class="font-bold text-center mb-5 text-[2rem]">Angular CRUD ngRx</h1>
+
+    <button
+      type="button"
+      routerLink="/add"
+      class="bg-indigo-500 hover:bg-indigo-600 p-3 rounded-xl text-white font-bold mb-5"
+    >
+      Add User
+    </button>
+
+    <div class="grid md:grid-cols-2 gap-5">
+      @for (user of users$ | async; track $index) {
+      <div class="shadow-xl p-3 rounded-xl flex justify-between">
+        <div>
+          <h1 class="font-bold">{{ user.name }}</h1>
+          <p>{{ user.email }}</p>
+        </div>
+        <div class="flex gap-x-3">
+          <button
+            type="button"
+            [routerLink]="['update', user.id]"
+            class="bg-teal-500 p-3 text-white rounded-xl hover:bg-teal-600"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            (click)="handleDelete(user.id)"
+            class="bg-red-500 p-3 text-white rounded-xl hover:bg-red-600"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>

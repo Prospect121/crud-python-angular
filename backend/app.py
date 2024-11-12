@@ -52,6 +52,21 @@ def get_users():
         return jsonify(users), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+# Ruta para obtener usuario por id
+@app.route('/users/<int:id>', methods=['GET'])
+def get_user(id):
+    try:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT * FROM users WHERE id = %s", (id,))
+        user = cursor.fetchone()  # Obtener un solo usuario
+        cursor.close()
+        if user:
+            return jsonify(user), 200
+        else:
+            return jsonify({"error": "User not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Ruta para crear un usuario
 @app.route('/users', methods=['POST'])

@@ -1,0 +1,59 @@
+<div>
+  <h1 class="font-bold text-[2rem] text-center mb-5 text-teal-500">
+    Edit Data
+  </h1>
+  <form
+    (ngSubmit)="handleUpdate()"
+    [formGroup]="form"
+    class="flex flex-col gap-4 max-w-md mx-auto"
+  >
+    <ng-container *ngIf="form | formControl : 'name' as nameField">
+      <div
+        class="w-full"
+        [ngClass]="{
+          'ng-invalid-custom': nameField?.touched && nameField?.invalid
+        }"
+      >
+        <label
+          for="name"
+          class="block mb-2 font-medium text-gray-900 dark:text-white"
+          >Name<span *ngIf="nameField | required">*</span></label
+        >
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Jhon"
+          autocomplete="off"
+        />
+      </div>
+    </ng-container>
+    <ng-container *ngIf="form | formControl : 'email' as emailField">
+      <div
+        class="w-full"
+        [ngClass]="{
+          'ng-invalid-custom': emailField?.touched && emailField?.invalid
+        }"
+      >
+        <label
+          for="email"
+          class="block mb-2 font-medium text-gray-900 dark:text-white"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="name@filmer.com"
+          autocomplete="off"
+        />
+      </div>
+    </ng-container>
+    <button
+      type="submit"
+      class="w-full bg-teal-500 rounded-xl text-white p-3 mt-5 hover:bg-teal-600"
+    >
+      Edit
+    </button>
+  </form>
+</div>
