@@ -3,8 +3,8 @@ version: "3.8"
 services:
   db:
     #build: ./db
-    #container_name: mysql_crud_container
     image: prospect9921/crud_python_angular:mysql_crud_container
+    container_name: mysql_crud_container
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: project_crud
@@ -20,8 +20,8 @@ services:
 
   backend:
     #build: ./backend
-    #container_name: backend_crud_container
     image: prospect9921/crud_python_angular:backend_crud_container
+    container_name: backend_crud_container
     environment:
       FLASK_ENV: development
       DB_HOST: db
@@ -37,8 +37,8 @@ services:
 
   frontend:
     #build: ./front
-    #container_name: frontend_crud_container
     image: prospect9921/crud_python_angular:frontend_crud_container
+    container_name: frontend_crud_container
     depends_on:
       - backend
     ports:
